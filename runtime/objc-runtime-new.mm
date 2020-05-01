@@ -3695,10 +3695,11 @@ static void schedule_class_load(Class cls)
     ASSERT(cls->isRealized());  // _read_images should realize
 
     if (cls->data()->flags & RW_LOADED) return;
-//在遍历 Class 的 +load 方法时会执行 schedule_class_load 方法，这个方法会递归到根节点来满足 Class 收集完整关系树的需求
+    // 确保父类先添加
     // Ensure superclass-first ordering
     schedule_class_load(cls->superclass);
 
+    // 将cls添加到loadable_classes数组的最后面
     add_class_to_loadable_list(cls);
     cls->setInfo(RW_LOADED); 
 }
@@ -3723,6 +3724,7 @@ void prepare_load_methods(const headerType *mhdr)
         _getObjc2NonlazyClassList(mhdr, &count);
 //    在遍历 Class 的 +load 方法时会执行 schedule_class_load 方法，这个方法会递归到根节点来满足 Class 收集完整关系树的需求
     for (i = 0; i < count; i++) {
+        // 定制或规划一些类
         schedule_class_load(remapClass(classlist[i]));
     }
 

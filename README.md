@@ -51,17 +51,16 @@ void _objc_init(void)
 ### +load方法
 * _objc_init
 * load_image
-* prepare_load_methods
+* prepare_load_methods 
     * schedule_class_load
     * add_class_to_loadable_list
     * add_category_to_loadable_list
 * call_load_methods  
-    * call_class_laods
-    * call_calss_loads
+    * call_class_loads
     * call_category_loads
     * (*load_method)(cls,SEL_load)
     
-* +load方法是根据方法地址直接调用，并不是经过objc_msgSend函数调用 
+* +load 方法是根据方法地址直接调用，并不是经过objc_msgSend函数调用 
 
 
 
