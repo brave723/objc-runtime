@@ -59,7 +59,7 @@ void _objc_init(void)
     * call_class_laods
     * call_calss_loads
     * call_category_loads
-    * **(*load_method)(cls,SEL_load)**
+    *  **(*load_method)(cls,SEL_load)**
     
 * +load方法是根据方法地址直接调用，并不是经过objc_msgSend函数调用 
 
