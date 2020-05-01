@@ -881,6 +881,14 @@ class list_array_tt {
         }
     }
 
+    /*
+     [
+        [method_t,method_t],
+        [method_t,method_t]
+     ]
+     addedCount
+     2
+     */
     void attachLists(List* const * addedLists, uint32_t addedCount) {
         if (addedCount == 0) return;
 
@@ -890,8 +898,11 @@ class list_array_tt {
             uint32_t newCount = oldCount + addedCount;
             setArray((array_t *)realloc(array(), array_t::byteSize(newCount)));
             array()->count = newCount;
-            memmove(array()->lists + addedCount, array()->lists, 
+            // array()-lists 原来的数组
+            memmove(array()->lists + addedCount,
+                    array()->lists,
                     oldCount * sizeof(array()->lists[0]));
+            // addedLists 所有分类列表
             memcpy(array()->lists, addedLists, 
                    addedCount * sizeof(array()->lists[0]));
         }

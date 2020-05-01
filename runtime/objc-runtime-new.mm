@@ -1263,8 +1263,12 @@ attachCategories(Class cls, const locstamped_category_t *cats_list, uint32_t cat
      * lists, so the final result is in the expected order.
      */
     constexpr uint32_t ATTACH_BUFSIZ = 64;
+    // 方法数组
+    
     method_list_t   *mlists[ATTACH_BUFSIZ];
+    // 属性数组
     property_list_t *proplists[ATTACH_BUFSIZ];
+    // 协议数组
     protocol_list_t *protolists[ATTACH_BUFSIZ];
 
     uint32_t mcount = 0;
@@ -1275,8 +1279,10 @@ attachCategories(Class cls, const locstamped_category_t *cats_list, uint32_t cat
     auto rw = cls->data();
 
     for (uint32_t i = 0; i < cats_count; i++) {
+        // 取出分类
         auto& entry = cats_list[i];
 
+        // 取出分类中的对象方法列表
         method_list_t *mlist = entry.cat->methodsForMeta(isMeta);
         if (mlist) {
             if (mcount == ATTACH_BUFSIZ) {
@@ -1310,6 +1316,7 @@ attachCategories(Class cls, const locstamped_category_t *cats_list, uint32_t cat
 
     if (mcount > 0) {
         prepareMethodLists(cls, mlists + ATTACH_BUFSIZ - mcount, mcount, NO, fromBundle);
+        // 将所有分类的对象方法，附加到类对象的方法列表中
         rw->methods.attachLists(mlists + ATTACH_BUFSIZ - mcount, mcount);
         if (flags & ATTACH_EXISTING) flushCaches(cls);
     }
