@@ -4,7 +4,7 @@ objc runtime 799.1
 ### 运行时入口
 objc-os.mm
 * 运行时初始化
-    
+  
 ```objc
 // 程序启动入口
 void _objc_init(void)
@@ -27,7 +27,6 @@ void _objc_init(void)
 //    在load_images中调用call_load_methods，调用所有Class和Category的+load方法
 //    进行各种objc结构的初始化（注册Objc类 、初始化类对象等等）
 //    调用C++静态初始化器和__attribute__((constructor))修饰的函数
-//
 //    到此为止，可执行文件和动态库中所有的符号(Class，Protocol，Selector，IMP，…)都已经按格式成功加载到内存中，被runtime 所管理
     
     _dyld_objc_notify_register(&map_images, load_images, unmap_image);
@@ -35,11 +34,12 @@ void _objc_init(void)
 ```
 
 ### category_t加载处理过程
+**objc-os.mm**
+
 * obj-os.mm
     * _objc_init
     * map_images
     * map_images_nolock 
-
 * objc-runtime-new.mm
     * _read_images
     * realizeClassWithoutSwift
